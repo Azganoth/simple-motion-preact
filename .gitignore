@@ -1,6 +1,9 @@
 # build output
 lib/
 
+# tests output
+coverage/
+
 # dependencies
 node_modules/
 

@@ -11,7 +11,7 @@
     "strict": true,
     "jsx": "react-jsx",
     "jsxImportSource": "preact",
-    "types": []
+    "types": ["jest", "@testing-library/jest-dom"]
   },
   "include": ["src"]
 }
