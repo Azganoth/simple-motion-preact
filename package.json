@@ -1,0 +1,42 @@
+{
+  "name": "@simple-motion/preact",
+  "version": "0.0.1",
+  "description": "A lightweight Preact transition library for animating component lifecycle changes.",
+  "keywords": [
+    "preact",
+    "transition",
+    "motion"
+  ],
+  "license": "MIT",
+  "author": "Ademir José Ferreira Júnior <ademirj.ferreirajunior@gmail.com> (https://github.com/Azganoth)",
+  "type": "module",
+  "main": "lib/index.js",
+  "module": "lib/index.es.js",
+  "types": "lib/index.d.ts",
+  "files": [
+    "lib",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "rimraf lib && rollup -c",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "test:ts": "tsc --noEmit"
+  },
+  "dependencies": {
+    "preact": "^10.25.4"
+  },
+  "devDependencies": {
+    "@rollup/plugin-node-resolve": "^16.0.0",
+    "@rollup/plugin-typescript": "^12.1.2",
+    "prettier": "^3.4.2",
+    "rimraf": "^6.0.1",
+    "rollup": "^4.29.1",
+    "rollup-plugin-dts": "^6.1.1",
+    "tslib": "^2.8.1",
+    "typescript": "^5.7.2"
+  },
+  "peerDependencies": {
+    "preact": "^10"
+  }
+}
