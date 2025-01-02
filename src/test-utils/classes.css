@@ -1,0 +1,32 @@
+.story-wrapper {
+  padding: 1.5rem;
+  background: rgb(0 0 0 / 0.1);
+  border-radius: 1rem;
+}
+
+.transition-item {
+  display: grid;
+  place-items: center;
+  width: 256px;
+  height: 56px;
+  border-radius: 1rem;
+  background: linear-gradient(135deg, var(--start-color), var(--end-color));
+  box-shadow: 0 4px 8px rgb(0 0 0 / 0.2);
+}
+
+.transition-label {
+  font-family: system-ui;
+  font-size: 1.5rem;
+  font-weight: bold;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: rgb(255 255 255 / 0.85);
+  white-space: nowrap;
+}
+
+/* Colors */
+
+.transition-item--sunset {
+  --start-color: #f19a3f;
+  --end-color: #be4421;
+}
