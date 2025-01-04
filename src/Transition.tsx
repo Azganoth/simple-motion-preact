@@ -40,7 +40,9 @@ export const Transition = ({
   unmount = false,
   ...eventHandlers
 }: TransitionProps) => {
+  const isFirstMount = useRef(true);
   const eventHandlersRef = useRef(eventHandlers);
+
   useLayoutEffect(() => {
     eventHandlersRef.current = eventHandlers;
   });
@@ -83,7 +85,9 @@ export const Transition = ({
         break;
       }
       case TransitionPhase.EXITED: {
-        onExited?.(nodeRef.current);
+        if (!isFirstMount.current) {
+          onExited?.(nodeRef.current);
+        }
         break;
       }
       default:
@@ -116,6 +120,10 @@ export const Transition = ({
       return prevPhase;
     });
   }, [inProp, enter, exit]);
+
+  useEffect(() => {
+    isFirstMount.current = false;
+  }, []);
 
   if (unmount && phase === TransitionPhase.EXITED) return null;
 

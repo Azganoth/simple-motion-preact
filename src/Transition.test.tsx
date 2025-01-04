@@ -110,6 +110,7 @@ describe("Transition", () => {
   });
 
   it("transitions on mount with 'appear'", () => {
+    const onExited = jest.fn();
     const onEnter = jest.fn();
     const onEntering = jest.fn();
     const onEntered = jest.fn();
@@ -120,6 +121,7 @@ describe("Transition", () => {
         onEnter={onEnter}
         onEntering={onEntering}
         onEntered={onEntered}
+        onExited={onExited}
       >
         {child}
       </Transition>,
@@ -136,6 +138,7 @@ describe("Transition", () => {
     expect(onEnter).toHaveBeenCalledTimes(1);
     expect(onEntering).toHaveBeenCalledTimes(1);
     expect(onEntered).toHaveBeenCalledTimes(1);
+    expect(onExited).not.toHaveBeenCalled();
   });
 
   it("transitions immediately when 'enter' and 'exit' are disabled", () => {
