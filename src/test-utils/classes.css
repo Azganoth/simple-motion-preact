@@ -1,4 +1,7 @@
 .story-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
   padding: 1.5rem;
   background: rgb(0 0 0 / 0.1);
   border-radius: 1rem;
@@ -34,6 +37,25 @@
 .transition-item--ocean {
   --start-color: #22aee6;
   --end-color: #2b5fc0;
+}
+
+.transition-item--twilight {
+  --start-color: #3578ea;
+  --end-color: #6a11cb;
+}
+
+.transition-item--earthy {
+  --start-color: #a1c045;
+  --end-color: #7f6139;
+}
+
+.transition-item--ice {
+  --start-color: #80d0c7;
+  --end-color: #156b9c;
+}
+
+.transition-item--small {
+  height: 40px;
 }
 
 .transitioning {
@@ -90,6 +112,16 @@
 .transition--slide-up-to {
   transform: translateY(0);
   opacity: 1;
+}
+
+.transition--slide-left {
+  transform: translateX(-20px);
+  opacity: 0;
+}
+
+.transition--slide-right {
+  transform: translateX(20px);
+  opacity: 0;
 }
 
 /* Zoom */
