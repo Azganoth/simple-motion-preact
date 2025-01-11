@@ -264,4 +264,58 @@ describe("Transition", () => {
 
     expect(refCallback).toHaveBeenCalledTimes(1);
   });
+
+  it("passes 'isAppearing' to lifecycle handlers", () => {
+    const onEnter = jest.fn();
+    const onEntering = jest.fn();
+    const onEntered = jest.fn();
+
+    const { rerender } = render(
+      <Transition
+        appear
+        onEnter={onEnter}
+        onEntering={onEntering}
+        onEntered={onEntered}
+      >
+        {child}
+      </Transition>,
+    );
+
+    act(() => {
+      jest.runAllTimers();
+    });
+
+    expect(onEnter).toHaveBeenCalledWith(expect.any(HTMLElement), true);
+    expect(onEntering).toHaveBeenCalledWith(expect.any(HTMLElement), true);
+    expect(onEntered).toHaveBeenCalledWith(expect.any(HTMLElement), true);
+
+    rerender(
+      <Transition
+        in={false}
+        onEnter={onEnter}
+        onEntering={onEntering}
+        onEntered={onEntered}
+      >
+        {child}
+      </Transition>,
+    );
+    rerender(
+      <Transition
+        in={true}
+        onEnter={onEnter}
+        onEntering={onEntering}
+        onEntered={onEntered}
+      >
+        {child}
+      </Transition>,
+    );
+
+    act(() => {
+      jest.runAllTimers();
+    });
+
+    expect(onEnter).toHaveBeenCalledWith(expect.any(HTMLElement), false);
+    expect(onEntering).toHaveBeenCalledWith(expect.any(HTMLElement), false);
+    expect(onEntered).toHaveBeenCalledWith(expect.any(HTMLElement), false);
+  });
 });

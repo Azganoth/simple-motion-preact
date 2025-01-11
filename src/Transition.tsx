@@ -18,15 +18,14 @@ export type TransitionProps = {
   exit?: boolean;
   duration?: number;
   unmount?: boolean;
-  onEnter?: (node?: HTMLElement) => void;
-  onEntering?: (node?: HTMLElement) => void;
-  onEntered?: (node?: HTMLElement) => void;
+  onEnter?: (node?: HTMLElement, isAppearing?: boolean) => void;
+  onEntering?: (node?: HTMLElement, isAppearing?: boolean) => void;
+  onEntered?: (node?: HTMLElement, isAppearing?: boolean) => void;
   onExit?: (node?: HTMLElement) => void;
   onExiting?: (node?: HTMLElement) => void;
   onExited?: (node?: HTMLElement) => void;
 };
 
-// TODO: Add `isAppearing` parameter to each enter handler
 // TODO: Add support for individual duration (appear, enter, exit)
 // TODO: Add a function prop that manually triggers end phase
 // TODO: Add support for state change via conditional render
@@ -40,14 +39,14 @@ export const Transition = ({
   unmount = false,
   ...eventHandlers
 }: TransitionProps) => {
-  const isFirstMount = useRef(true);
   const eventHandlersRef = useRef(eventHandlers);
-
   useLayoutEffect(() => {
     eventHandlersRef.current = eventHandlers;
   });
 
   const nodeRef = useRef<HTMLElement>();
+  const isFirstMountRef = useRef(true);
+  const isAppearingRef = useRef(appear);
 
   const [phase, setPhase] = useState(() =>
     inProp && !appear ? TransitionPhase.ENTERED : TransitionPhase.EXITED,
@@ -59,9 +58,9 @@ export const Transition = ({
       eventHandlersRef.current;
     switch (phase) {
       case TransitionPhase.ENTERING: {
-        onEnter?.(nodeRef.current);
+        onEnter?.(nodeRef.current, isAppearingRef.current);
         reflow(nodeRef.current);
-        onEntering?.(nodeRef.current);
+        onEntering?.(nodeRef.current, isAppearingRef.current);
 
         timeoutId = window.setTimeout(
           () => setPhase(TransitionPhase.ENTERED),
@@ -81,11 +80,12 @@ export const Transition = ({
         break;
       }
       case TransitionPhase.ENTERED: {
-        onEntered?.(nodeRef.current);
+        onEntered?.(nodeRef.current, isAppearingRef.current);
+        isAppearingRef.current = false;
         break;
       }
       case TransitionPhase.EXITED: {
-        if (!isFirstMount.current) {
+        if (!isFirstMountRef.current) {
           onExited?.(nodeRef.current);
         }
         break;
@@ -122,7 +122,7 @@ export const Transition = ({
   }, [inProp, enter, exit]);
 
   useEffect(() => {
-    isFirstMount.current = false;
+    isFirstMountRef.current = false;
   }, []);
 
   if (unmount && phase === TransitionPhase.EXITED) return null;
