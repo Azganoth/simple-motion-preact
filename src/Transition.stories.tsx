@@ -62,9 +62,23 @@ export default {
     },
     duration: {
       description:
-        "Specifies the duration (in milliseconds) for the entering and exiting phases.",
+        "Specifies the duration (in milliseconds) for the entering and exiting phases. Can be set individually for appear, enter and exit transitions.",
       table: {
         defaultValue: { summary: "150" },
+      },
+      type: {
+        name: "union",
+        value: [
+          { name: "number" },
+          {
+            name: "object",
+            value: {
+              appear: { name: "number" },
+              enter: { name: "number" },
+              exit: { name: "number" },
+            },
+          },
+        ],
       },
     },
     unmount: {
@@ -152,7 +166,7 @@ export const Fade = {
   decorators: [
     ...Default.decorators,
     (Story, ctx) => {
-      const shouldEnter = useAutoToggle((ctx.args.duration ?? 0) + 3000);
+      const shouldEnter = useAutoToggle(3500);
 
       return Story({
         args: {

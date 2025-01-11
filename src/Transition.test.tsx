@@ -208,6 +208,67 @@ describe("Transition", () => {
     expect(screen.getByText(TransitionPhase.ENTERED)).toBeInTheDocument();
   });
 
+  it("supports individual durations", () => {
+    const durations = {
+      appear: 1000,
+      enter: 7000,
+      exit: 3000,
+    };
+    const { rerender } = render(
+      <Transition appear duration={durations}>
+        {child}
+      </Transition>,
+    );
+
+    act(() => {
+      jest.advanceTimersByTime(durations.appear / 2);
+    });
+
+    expect(screen.getByText(TransitionPhase.ENTERING)).toBeInTheDocument();
+
+    act(() => {
+      jest.runAllTimers();
+    });
+
+    expect(screen.getByText(TransitionPhase.ENTERED)).toBeInTheDocument();
+
+    rerender(
+      <Transition appear in={false} duration={durations}>
+        {child}
+      </Transition>,
+    );
+
+    act(() => {
+      jest.advanceTimersByTime(durations.exit / 2);
+    });
+
+    expect(screen.getByText(TransitionPhase.EXITING)).toBeInTheDocument();
+
+    act(() => {
+      jest.runAllTimers();
+    });
+
+    expect(screen.getByText(TransitionPhase.EXITED)).toBeInTheDocument();
+
+    rerender(
+      <Transition appear in={true} duration={durations}>
+        {child}
+      </Transition>,
+    );
+
+    act(() => {
+      jest.advanceTimersByTime(durations.enter / 2);
+    });
+
+    expect(screen.getByText(TransitionPhase.ENTERING)).toBeInTheDocument();
+
+    act(() => {
+      jest.runAllTimers();
+    });
+
+    expect(screen.getByText(TransitionPhase.ENTERED)).toBeInTheDocument();
+  });
+
   it("does not trigger transitions when 'in' remains unchanged", () => {
     const onEntering = jest.fn();
     const onEntered = jest.fn();

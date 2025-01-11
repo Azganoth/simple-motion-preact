@@ -120,7 +120,7 @@ export const Fade = {
   decorators: [
     ...Default.decorators,
     (Story, ctx) => {
-      const shouldEnter = useAutoToggle((ctx.args.duration ?? 0) + 3000);
+      const shouldEnter = useAutoToggle(3500);
 
       return Story({
         args: {
