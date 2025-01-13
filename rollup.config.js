@@ -7,8 +7,8 @@ const config = [
   {
     input: "src/index.ts",
     output: [
-      { file: "lib/index.js", format: "cjs", exports: "auto" },
-      { file: "lib/index.es.js", format: "esm" },
+      { file: "lib/index.cjs", format: "cjs", exports: "auto" },
+      { file: "lib/index.js", format: "esm" },
     ],
     plugins: [
       resolve(),

@@ -10,8 +10,8 @@
   "license": "MIT",
   "author": "Ademir José Ferreira Júnior <ademirj.ferreirajunior@gmail.com> (https://github.com/Azganoth)",
   "type": "module",
-  "main": "lib/index.js",
-  "module": "lib/index.es.js",
+  "main": "lib/index.cjs",
+  "module": "lib/index.js",
   "types": "lib/index.d.ts",
   "files": [
     "lib",
